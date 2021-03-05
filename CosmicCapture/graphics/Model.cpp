@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 #include <glm/gtc/type_ptr.hpp>
 
+
 Model::Model(
 	const char* modelPath,
 	const char* texturePath,
@@ -32,9 +33,7 @@ Model::Model(
 }
 
 
-
-
-void Model::draw(const physx::PxMat44& modelMatrix)
+void Model::draw(const physx::PxMat44& modelMatrix, const ShaderProgram& shaderProgram, bool depth, const unsigned int& depthMap)
 {
 
 	setModel(modelMatrix);
@@ -201,7 +200,6 @@ void Model::processMesh(aiMesh* mesh)
 		for (unsigned int j = 0; j < face.mNumIndices; ++j)
 			geometry.indices.emplace_back(face.mIndices[j]);
 	}
-	
 
 	auto numVertices = geometry.vertices.size();
 	auto numNormals = geometry.normals.size();

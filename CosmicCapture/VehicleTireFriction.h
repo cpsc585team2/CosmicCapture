@@ -27,38 +27,25 @@
 // Copyright (c) 2004-2008 AGEIA Technologies, Inc. All rights reserved.
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.  
 
-#include "physx/PxPhysicsAPI.h"
-#include "VehicleTireFriction.h"
+#pragma once
 
+#include "physx/PxPhysicsAPI.h"
 
 using namespace physx;
 
-//Tire model friction for each combination of drivable surface type and tire type.
-static PxF32 gTireFrictionMultipliers[MAX_NUM_SURFACE_TYPES][MAX_NUM_TIRE_TYPES] =
+//Drivable surface types.
+enum
 {
-	//NORMAL,	WORN
-	{3.00f,		0.1f}//TARMAC
+	SURFACE_TYPE_TARMAC,
+	MAX_NUM_SURFACE_TYPES
 };
 
-PxVehicleDrivableSurfaceToTireFrictionPairs* createFrictionPairs(const PxMaterial* defaultMaterial)
+//Tire types.
+enum
 {
-	PxVehicleDrivableSurfaceType surfaceTypes[1];
-	surfaceTypes[0].mType = SURFACE_TYPE_TARMAC;
+	TIRE_TYPE_NORMAL = 0,
+	TIRE_TYPE_WORN,
+	MAX_NUM_TIRE_TYPES
+};
 
-	const PxMaterial* surfaceMaterials[1];
-	surfaceMaterials[0] = defaultMaterial;
-
-	PxVehicleDrivableSurfaceToTireFrictionPairs* surfaceTirePairs =
-		PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(MAX_NUM_TIRE_TYPES, MAX_NUM_SURFACE_TYPES);
-
-	surfaceTirePairs->setup(MAX_NUM_TIRE_TYPES, MAX_NUM_SURFACE_TYPES, surfaceMaterials, surfaceTypes);
-
-	for (PxU32 i = 0; i < MAX_NUM_SURFACE_TYPES; i++)
-	{
-		for (PxU32 j = 0; j < MAX_NUM_TIRE_TYPES; j++)
-		{
-			surfaceTirePairs->setTypePairFriction(i, j, gTireFrictionMultipliers[i][j]);
-		}
-	}
-	return surfaceTirePairs;
-}
+PxVehicleDrivableSurfaceToTireFrictionPairs* createFrictionPairs(const PxMaterial* defaultMaterial);

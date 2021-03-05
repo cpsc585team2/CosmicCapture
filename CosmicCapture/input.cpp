@@ -3,7 +3,6 @@
 #include "input.h"
 
 
-
 /*
   Code sources used in this file:
   https://lazyfoo.net/tutorials/SDL/19_gamepads_and_joysticks/index.php
